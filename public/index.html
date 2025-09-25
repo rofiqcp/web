@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 S2 SCADA Control Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-microchip"></i> ESP32 S2 SCADA Control Panel</h1>
+            <div class="connection-status">
+                <span id="connectionStatus" class="status-disconnected">
+                    <i class="fas fa-circle"></i> Disconnected
+                </span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="panel control-panel">
+                <h2><i class="fas fa-sliders-h"></i> Control Panel</h2>
+                
+                <!-- Push Buttons -->
+                <div class="control-group">
+                    <h3>Push Buttons</h3>
+                    <div class="button-group">
+                        <button id="pushBtn1" class="push-button" data-id="1">
+                            <i class="fas fa-power-off"></i>
+                            <span>Push 1</span>
+                        </button>
+                        <button id="pushBtn2" class="push-button" data-id="2">
+                            <i class="fas fa-play"></i>
+                            <span>Push 2</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Toggle Buttons -->
+                <div class="control-group">
+                    <h3>Toggle Switches</h3>
+                    <div class="toggle-group">
+                        <div class="toggle-container">
+                            <label for="toggle1">Toggle 1</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle1" data-id="1">
+                                <label for="toggle1" class="slider"></label>
+                            </div>
+                        </div>
+                        <div class="toggle-container">
+                            <label for="toggle2">Toggle 2</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle2" data-id="2">
+                                <label for="toggle2" class="slider"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sliders -->
+                <div class="control-group">
+                    <h3>Control Sliders</h3>
+                    <div class="slider-group">
+                        <div class="slider-container">
+                            <label for="slider1">Slider 1: <span id="slider1Value">50</span>%</label>
+                            <input type="range" id="slider1" class="control-slider" min="0" max="100" value="50" data-id="1">
+                        </div>
+                        <div class="slider-container">
+                            <label for="slider2">Slider 2: <span id="slider2Value">50</span>%</label>
+                            <input type="range" id="slider2" class="control-slider" min="0" max="100" value="50" data-id="2">
+                        </div>
+                        <div class="slider-container">
+                            <label for="slider3">Slider 3: <span id="slider3Value">50</span>%</label>
+                            <input type="range" id="slider3" class="control-slider" min="0" max="100" value="50" data-id="3">
+                        </div>
+                        <div class="slider-container">
+                            <label for="slider4">Slider 4: <span id="slider4Value">50</span>%</label>
+                            <input type="range" id="slider4" class="control-slider" min="0" max="100" value="50" data-id="4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Panel -->
+            <div class="panel monitoring-panel">
+                <h2><i class="fas fa-chart-line"></i> Monitoring Panel</h2>
+                
+                <!-- Status Indicators -->
+                <div class="monitor-group">
+                    <h3>Status Indicators</h3>
+                    <div class="indicator-group">
+                        <div class="indicator" id="indicator1">
+                            <div class="led" data-status="off"></div>
+                            <span>Indicator 1</span>
+                        </div>
+                        <div class="indicator" id="indicator2">
+                            <div class="led" data-status="off"></div>
+                            <span>Indicator 2</span>
+                        </div>
+                        <div class="indicator" id="indicator3">
+                            <div class="led" data-status="off"></div>
+                            <span>Indicator 3</span>
+                        </div>
+                        <div class="indicator" id="indicator4">
+                            <div class="led" data-status="off"></div>
+                            <span>Indicator 4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gauges -->
+                <div class="monitor-group">
+                    <h3>Analog Gauges</h3>
+                    <div class="gauge-group">
+                        <div class="gauge-container">
+                            <div class="gauge" id="gauge1">
+                                <div class="gauge-needle" style="transform: rotate(-90deg);"></div>
+                                <div class="gauge-center"></div>
+                            </div>
+                            <div class="gauge-label">
+                                <span>Gauge 1</span>
+                                <span id="gauge1Value" class="gauge-value">0%</span>
+                            </div>
+                        </div>
+                        <div class="gauge-container">
+                            <div class="gauge" id="gauge2">
+                                <div class="gauge-needle" style="transform: rotate(-90deg);"></div>
+                                <div class="gauge-center"></div>
+                            </div>
+                            <div class="gauge-label">
+                                <span>Gauge 2</span>
+                                <span id="gauge2Value" class="gauge-value">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Variable Boxes -->
+                <div class="monitor-group">
+                    <h3>Variable Display</h3>
+                    <div class="variable-group">
+                        <div class="variable-box">
+                            <label>Variable 1</label>
+                            <div id="variable1" class="variable-value">0.00</div>
+                            <span class="unit">V</span>
+                        </div>
+                        <div class="variable-box">
+                            <label>Variable 2</label>
+                            <div id="variable2" class="variable-value">0.00</div>
+                            <span class="unit">A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h2><i class="fas fa-cog"></i> Settings</h2>
+                    <button id="closeSettings" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="settings-body">
+                    <div class="setting-group">
+                        <label for="esp32Ip">ESP32 IP Address:</label>
+                        <input type="text" id="esp32Ip" value="192.168.1.100" placeholder="192.168.1.100">
+                    </div>
+                    <div class="setting-group">
+                        <label for="updateInterval">Update Interval (ms):</label>
+                        <input type="number" id="updateInterval" value="1000" min="100" max="10000">
+                    </div>
+                    <div class="setting-group">
+                        <label for="autoConnect">Auto Connect:</label>
+                        <input type="checkbox" id="autoConnect" checked>
+                    </div>
+                    <div class="setting-group">
+                        <button id="saveSettings" class="save-btn">
+                            <i class="fas fa-save"></i> Save Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <button id="settingsBtn" class="settings-btn">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+            <div class="footer-info">
+                <span>Last Update: <span id="lastUpdate">Never</span></span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
