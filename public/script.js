@@ -123,47 +123,21 @@ class SCADAController {
     }
     
     sendControlData(type, id, value) {
-        if (this.socket && this.isConnected) {
-            this.socket.emit('controlData', {
-                type: type,
-                id: id,
-                value: value,
-                timestamp: Date.now()
-            });
-        } else {
-            console.log('Not connected to ESP32. Control data:', { type, id, value });
-        }
+        // For GitHub Pages demo - just log the control data
+        console.log('Demo Mode - Control data sent:', { type, id, value, timestamp: Date.now() });
+        
+        // Update local state for demo
+        this.controlStates[type === 'pushButton' ? 'pushButtons' : type === 'toggle' ? 'toggles' : 'sliders'][id] = value;
     }
     
     connect() {
-        try {
-            this.socket = io();
-            
-            this.socket.on('connect', () => {
-                this.isConnected = true;
-                this.updateConnectionStatus(true);
-                console.log('Connected to ESP32 SCADA system');
-            });
-            
-            this.socket.on('disconnect', () => {
-                this.isConnected = false;
-                this.updateConnectionStatus(false);
-                console.log('Disconnected from ESP32 SCADA system');
-            });
-            
-            this.socket.on('monitoringData', (data) => {
-                this.updateMonitoringData(data);
-            });
-            
-            this.socket.on('error', (error) => {
-                console.error('Socket error:', error);
-                this.updateConnectionStatus(false);
-            });
-            
-        } catch (error) {
-            console.error('Connection error:', error);
-            this.updateConnectionStatus(false);
-        }
+        // For GitHub Pages demo - simulate connection
+        console.log('Demo mode: Simulating ESP32 connection...');
+        setTimeout(() => {
+            this.isConnected = true;
+            this.updateConnectionStatus(true);
+            console.log('Connected to ESP32 SCADA system (Demo Mode)');
+        }, 1000);
     }
     
     updateMonitoringData(data) {
@@ -291,10 +265,8 @@ class SCADAController {
                 }
             };
             
-            // Only update if not connected to real ESP32
-            if (!this.isConnected) {
-                this.updateMonitoringData(simulatedData);
-            }
+            // Always update in demo mode for GitHub Pages
+            this.updateMonitoringData(simulatedData);
         }, this.settings.updateInterval);
     }
     
